@@ -1,0 +1,17 @@
+@(wordForm:Form[domain.WordEntry])
+@import helper._
+
+@main("Gaining gayan"){
+
+@helper.form(action = routes.Application.save()) {
+<fieldset>
+    <legend>
+    @Messages("Enter new word to add"))
+</legend>
+    @helper.inputText(wordForm("word"))
+    @helper.inputText(wordForm("meaning"))
+    @helper.inputText(wordForm("book"))
+</fieldset>
+<p><input type="submit" value='Add word'></p>
+}
+}

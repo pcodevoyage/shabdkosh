@@ -1,0 +1,47 @@
+package repo
+
+import com.mongodb.DBObject
+import com.mongodb.casbah.MongoClient
+import com.mongodb.casbah.commons.MongoDBObject
+import domain.{WordEntry, WordEntryProperties}
+import play.Logger
+
+/**
+ * Created by p.samaddar on 02/05/2015.
+ */
+class WordRepo {
+
+  val mongoClient =  MongoClient()
+  val db = mongoClient("test")
+
+  def words:List[WordEntry] = {
+    val words = db("words")
+
+    Logger.debug("Retrived "+words.size+ " words from mongoDB")
+
+    words map WordEntryFromMongoObject toList
+
+  }
+
+  def convertWordToMongoObject(word:WordEntry):DBObject ={
+    MongoDBObject(
+      WordEntryProperties.WORD -> word.word,
+      WordEntryProperties.MEANING -> word.meaning,
+      WordEntryProperties.BOOK ->word.book
+    )
+  }
+
+  def WordEntryFromMongoObject(dBObject: DBObject)={
+    WordEntry(
+      dBObject.get(WordEntryProperties.WORD).toString,
+      dBObject.get(WordEntryProperties.MEANING).toString,
+      dBObject.get(WordEntryProperties.BOOK).toString)
+  }
+
+  def saveWord(word:WordEntry)={
+    Logger.debug("Will try to save :"+word)
+    val words = db("words")
+
+    words.insert(convertWordToMongoObject(word))
+  }
+}

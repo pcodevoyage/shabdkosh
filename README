@@ -1,0 +1,5 @@
+	SHABDAKOSH
+=================================
+
+This web app allows one to store words with their meaning. I wanted to stop them somewhere 
+at the same time wanted to use MongoDb, Play and scala. So wrote this application. 

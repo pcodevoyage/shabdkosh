@@ -11,6 +11,7 @@ import play.Logger
  */
 class WordRepo {
 
+
   val mongoClient =  MongoClient()
   val db = mongoClient("test")
 
@@ -44,4 +45,13 @@ class WordRepo {
 
     words.insert(convertWordToMongoObject(word))
   }
+
+  def search(wordToSearch: String):List[WordEntry] = {
+    val words = db("words")
+
+    val queryBuilder = MongoDBObject(WordEntryProperties.WORD -> wordToSearch)
+
+    words.find(queryBuilder) map WordEntryFromMongoObject toList
+  }
+
 }

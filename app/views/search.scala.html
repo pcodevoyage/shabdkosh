@@ -1,4 +1,4 @@
-@(form:Form[String])
+@(searchForm:Form[domain.SearchWord])
 @import helper._
 
 @main("Gaining gayan"){
@@ -8,7 +8,7 @@
     <legend>
         @Messages("Search Word"))
     </legend>
-    @helper.inputText(form("word"))
+    @helper.inputText(searchForm("wordToSearch"))
 </fieldset>
 <p><input type="submit" value='Search word'></p>
 }

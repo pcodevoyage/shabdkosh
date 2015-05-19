@@ -1,6 +1,6 @@
 package controllers
 
-import domain.WordEntry
+import domain.{SearchWordProperties, WordEntryProperties, SearchWord, WordEntry}
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
 import play.api.mvc._
@@ -20,9 +20,9 @@ object Application extends Controller {
 
   private val wordForm:Form[WordEntry] = Form(
     mapping(
-      "word" -> nonEmptyText,
-      "meaning" -> nonEmptyText,
-      "book" -> nonEmptyText
+      WordEntryProperties.WORD -> nonEmptyText,
+      WordEntryProperties.MEANING -> nonEmptyText,
+      WordEntryProperties.BOOK -> nonEmptyText
     )(WordEntry.apply)(WordEntry.unapply)
   )
 
@@ -41,9 +41,33 @@ object Application extends Controller {
   }
 
   def newWord = Action { implicit  request =>
-
     Ok(views.html.addWord(wordForm))
+  }
 
+  def search = Action { implicit request =>
+    val form = searchFrom.bindFromRequest()
+
+    form.fold(
+      hasErrors = { form =>
+        Redirect(routes.Application.newSearch)
+
+      },
+      success = {form =>
+        val f =repo.search(form.wordToSearch)
+        Ok(views.html.wordList(f))
+      }
+    )
+
+  }
+
+  private val searchFrom:Form[SearchWord] = Form(
+    mapping (
+      SearchWordProperties.WORD -> nonEmptyText
+    )(SearchWord.apply)(SearchWord.unapply)
+  )
+
+  def newSearch = Action {
+    Ok(views.html.search(searchFrom))
   }
 
 }

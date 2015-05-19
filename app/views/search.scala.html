@@ -1,0 +1,15 @@
+@(form:Form[String])
+@import helper._
+
+@main("Gaining gayan"){
+
+@helper.form(action = routes.Application.search()) {
+<fieldset>
+    <legend>
+        @Messages("Search Word"))
+    </legend>
+    @helper.inputText(form("word"))
+</fieldset>
+<p><input type="submit" value='Search word'></p>
+}
+}

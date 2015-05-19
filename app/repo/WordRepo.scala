@@ -49,7 +49,8 @@ class WordRepo {
   def search(wordToSearch: String):List[WordEntry] = {
     val words = db("words")
 
-    val queryBuilder = MongoDBObject(WordEntryProperties.WORD -> wordToSearch)
+    val queryWord = (".*"+wordToSearch+".*").r
+    val queryBuilder = MongoDBObject(WordEntryProperties.WORD -> queryWord)
 
     words.find(queryBuilder) map WordEntryFromMongoObject toList
   }

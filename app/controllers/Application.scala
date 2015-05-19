@@ -1,10 +1,12 @@
 package controllers
 
+import akka.event.slf4j.Logger
 import domain.{SearchWordProperties, WordEntryProperties, SearchWord, WordEntry}
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
 import play.api.mvc._
 import repo.WordRepo
+import play.Logger
 
 object Application extends Controller {
 
@@ -54,6 +56,7 @@ object Application extends Controller {
       },
       success = {form =>
         val f =repo.search(form.wordToSearch)
+        play.Logger.debug("Search for word '"+form.wordToSearch+"' found "+f.size+ " results")
         Ok(views.html.wordList(f))
       }
     )

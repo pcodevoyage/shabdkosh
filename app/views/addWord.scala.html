@@ -8,9 +8,9 @@
     <legend>
     @Messages("Enter new word to add"))
 </legend>
-    @helper.inputText(wordForm("word"))
-    @helper.inputText(wordForm("meaning"))
-    @helper.inputText(wordForm("book"))
+    @helper.inputText(wordForm("word"),'size -> 50)
+    @helper.textarea(wordForm("meaning"),'cols->40, 'rows->5)
+    @helper.inputText(wordForm("book"),'size -> 50)
 </fieldset>
 <p><input type="submit" value='Add word'></p>
 }

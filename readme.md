@@ -5,10 +5,12 @@ I read books somewhere at the same time wanted to use MongoDb, Play and scala. S
 
 ## How to Run
 1. Start Mongo DB. (For personal sure the database is part of this project now)
+   
    ```  
    mongod --dbpath /shabdkosh/db
    ```
 2. Start the webserver.
+   
    ``` 
    sbt run
    ```

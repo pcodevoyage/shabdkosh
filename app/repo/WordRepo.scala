@@ -26,7 +26,7 @@ class WordRepo {
 
   def convertWordToMongoObject(word:WordEntry):DBObject ={
     MongoDBObject(
-      WordEntryProperties.WORD -> word.word,
+      WordEntryProperties.WORD -> word.word.toLowerCase,
       WordEntryProperties.MEANING -> word.meaning,
       WordEntryProperties.BOOK ->word.book
     )
@@ -34,7 +34,7 @@ class WordRepo {
 
   def WordEntryFromMongoObject(dBObject: DBObject)={
     WordEntry(
-      dBObject.get(WordEntryProperties.WORD).toString,
+      dBObject.get(WordEntryProperties.WORD).toString.capitalize,
       dBObject.get(WordEntryProperties.MEANING).toString,
       dBObject.get(WordEntryProperties.BOOK).toString)
   }
